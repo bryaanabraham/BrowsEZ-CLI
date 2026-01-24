@@ -6,3 +6,4 @@ VA_Tools/
 *__pycache__/
 .toolrc.json
 *.zip
+*.7z

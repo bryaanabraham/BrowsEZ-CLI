@@ -1,0 +1,8 @@
+venv/
+workflow.md
+schema.md
+transXT_tools/
+VA_Tools/
+*__pycache__/
+.toolrc.json
+*.zip

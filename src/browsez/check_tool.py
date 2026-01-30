@@ -14,6 +14,14 @@ import ast
 
 
 def validate_tool(path: str) -> List[str]:
+    """Validate tool directory structure and contents.
+    
+    Args:
+        path: Path to the tool directory
+        
+    Returns:
+        List of validation error messages (empty if valid)
+    """
     errors = []
 
     required_root_files = {"requirements.txt", "tool.yaml"}

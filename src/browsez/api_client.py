@@ -8,7 +8,8 @@ import time
 import requests
 from pathlib import Path
 from typing import Optional, Dict, Any
-from schemas import (
+
+from .schemas import (
     RequestToolUploadURLRequest,
     RequestUIModuleUploadURLRequest,
     SignedUploadURLResponse,
@@ -33,8 +34,6 @@ class ToolPublisherClient:
         
         Args:
             base_url: Base URL of the API (e.g., https://browsez-platform-backend-production.up.railway.app)
-            session_id: Optional session ID for authentication
-            timeout: Request timeout in seconds
             session_id: Optional session ID for authentication
             timeout: Request timeout in seconds
             retry_attempts: Number of retry attempts for failed requests

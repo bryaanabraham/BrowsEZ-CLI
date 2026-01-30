@@ -1,58 +1,52 @@
-# BrowsEZ Tool and UI Publishing
+# BrowsEZ CLI
 
-A modular, production-ready system for publishing tools and UI modules to a backend service.
-
-## Features
-
-- **Strict Schema Validation**: Ensures tools meet all requirements before packaging.
-- **Deterministic Packaging**: Creates consistent zip files with content-based hashing (SHA-256).
-- **Secure Uploads**: Uses pre-signed S3 URLs for artifacts.
-- **Configurable**: Supports configuration via file, CLI arguments, and defaults.
-- **Resilient**: Implements retry logic and exponential backoff for network operations.
-
-## Architecture
-
-The system is organized into the following modules:
-
-1.  **`cli.py`**: The entry point for the command-line interface.
-2.  **`upload_tool.py`**: Orchestrates the validation, packaging, and upload process.
-3.  **`check_tool.py`**: Validates tool structure and metadata.
-4.  **`packaging.py`**: Handles deterministic zipping and hashing.
-5.  **`schemas.py`**: Defines Pydantic models for API contracts.
-6.  **`api_client.py`**: Handles HTTP communication with the backend.
-7.  **`config.py`**: Manages configuration loading.
+A command-line tool for publishing tools and UI modules to the BrowsEZ platform.
 
 ## Installation
 
-Install dependencies:
+### From PyPI (when published)
 
 ```bash
-pip install -r requirements.txt
+pip install browsez-cli
 ```
 
-## Usage
-
-### Publishing a Tool
-
-To publish a tool using the default configuration (in `.toolrc.json`):
+### From Source (Development)
 
 ```bash
-python cli.py publish-tool path/to/tool_directory
+# Clone and install in editable mode
+cd cli-mode
+pip install -e .
 ```
 
-### Validating a Tool
-
-To validate a tool without uploading:
+## Quick Start
 
 ```bash
-python cli.py validate-tool path/to/tool_directory
+# Login to the platform
+browsez login
+
+# Validate a tool before publishing
+browsez validate path/to/tool_directory
+
+# Publish a tool
+browsez publish path/to/tool_directory
 ```
 
-### Configuration
+## Commands
 
-The system uses a `.toolrc.json` file for configuration. It will be automatically created on the first run if it doesn't exist.
+| Command | Description |
+|---------|-------------|
+| `browsez login` | Login to the BrowsEZ platform |
+| `browsez logout` | Clear the current session |
+| `browsez validate <dir>` | Validate a tool without uploading |
+| `browsez publish <dir>` | Publish a tool to the backend |
+| `browsez publish-ui <dir>` | Publish a UI module (coming soon) |
+| `browsez config show` | Show current configuration |
+| `browsez config set <key> <value>` | Set a config value |
 
-Default `.toolrc.json`:
+## Configuration
+
+The CLI uses a `.toolrc.json` file for configuration. It is auto-created on first run:
+
 ```json
 {
   "api_base_url": "https://browsez-platform-backend-production.up.railway.app",
@@ -63,15 +57,16 @@ Default `.toolrc.json`:
 }
 ```
 
-You can also override settings via CLI arguments:
+Override settings via CLI:
 
 ```bash
-python cli.py publish-tool path/to/tool --api-url https://api.example.com --risk-level HIGH
+browsez config set api-url https://api.example.com
+browsez config set risk-level HIGH
 ```
 
-## Directory Structure
+## Tool Directory Structure
 
-A valid tool directory must look like this:
+A valid tool directory must have:
 
 ```
 tool_name/
@@ -81,3 +76,24 @@ tool_name/
     ├── __init__.py
     └── main.py         # Entry point (run function, Input/Output classes)
 ```
+
+## Development
+
+```bash
+# Install with dev dependencies
+pip install -e ".[dev]"
+
+# Build the package
+python -m build
+
+# Upload to PyPI (requires twine and credentials)
+twine upload dist/*
+```
+
+## Features
+
+- **Strict Schema Validation**: Ensures tools meet all requirements before packaging
+- **Deterministic Packaging**: Creates consistent zip files with content-based hashing (SHA-256)
+- **Secure Uploads**: Uses pre-signed S3 URLs for artifacts
+- **Configurable**: Supports configuration via file, CLI arguments, and defaults
+- **Resilient**: Implements retry logic and exponential backoff for network operations

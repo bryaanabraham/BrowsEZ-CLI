@@ -11,7 +11,8 @@ import json
 from pathlib import Path
 from typing import Optional
 from dataclasses import dataclass, asdict
-from schemas import RiskLevel
+
+from .schemas import RiskLevel
 
 
 @dataclass
@@ -98,12 +99,12 @@ class ConfigManager:
             self.config.tenant_id = tenant_id
         if risk_level:
             self.config.default_risk_level = risk_level
-        if session_id:
-            self.config.session_id = session_id
-        if user_email:
-            self.config.user_email = user_email
-        if expires_at:
-            self.config.expires_at = expires_at
+        if session_id is not None:
+            self.config.session_id = session_id if session_id else None
+        if user_email is not None:
+            self.config.user_email = user_email if user_email else None
+        if expires_at is not None:
+            self.config.expires_at = expires_at if expires_at else None
         if kms_key_id:
             self.config.kms_key_id = kms_key_id
         

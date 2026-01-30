@@ -7,3 +7,21 @@ VA_Tools/
 .toolrc.json
 *.zip
 *.7z
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+src/*.egg-info/
+
+# Old loose scripts (now in src/browsez/)
+/api_client.py
+/check_tool.py
+/cli.py
+/config.py
+/packaging.py
+/schemas.py
+/server.py
+/upload_tool.py
+archive/
+*.gitignore*

@@ -9,11 +9,11 @@ import yaml
 from pathlib import Path
 from typing import Optional
 
-from check_tool import validate_tool
-from packaging import package_tool
-from schemas import ToolMetadata, RiskLevel
-from api_client import ToolPublisherClient
-from config import ConfigManager
+from .check_tool import validate_tool
+from .packaging import package_tool
+from .schemas import ToolMetadata, RiskLevel
+from .api_client import ToolPublisherClient
+from .config import ConfigManager
 
 
 def run(directory: str, api_url: Optional[str] = None, risk_level: Optional[str] = None) -> None:
@@ -89,7 +89,6 @@ def run(directory: str, api_url: Optional[str] = None, risk_level: Optional[str]
             content_hash=content_hash
         )
         print(f"[OK] Upload URL received (expires in {upload_response.expires_in_seconds}s)")
-        # print("upload response: ", upload_response)
         # Upload to S3
         client.upload_to_s3(upload_response.upload_url, zip_path)
         
@@ -128,23 +127,3 @@ def run(directory: str, api_url: Optional[str] = None, risk_level: Optional[str]
     print(f"\n{'='*60}")
     print(f"[OK] Tool '{tool_metadata.name}' published successfully!")
     print(f"{'='*60}\n")
-
-
-if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: python upload_tool.py <tool_directory> [--api-url URL] [--risk-level LEVEL]")
-        sys.exit(1)
-    
-    directory = sys.argv[1]
-    
-    # Parse optional arguments
-    api_url = None
-    risk_level = None
-    
-    for i, arg in enumerate(sys.argv[2:], start=2):
-        if arg == "--api-url" and i + 1 < len(sys.argv):
-            api_url = sys.argv[i + 1]
-        elif arg == "--risk-level" and i + 1 < len(sys.argv):
-            risk_level = sys.argv[i + 1]
-    
-    run(directory, api_url=api_url, risk_level=risk_level)

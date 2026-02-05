@@ -11,9 +11,9 @@ from pydantic import BaseModel, Field, field_validator
 
 class RiskLevel(str, Enum):
     """Risk level classification for tools."""
-    LOW = "LOW"
-    MEDIUM = "MEDIUM"
-    HIGH = "HIGH"
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
 
 
 class RequestToolUploadURLRequest(BaseModel):
@@ -36,6 +36,10 @@ class SignedUploadURLResponse(BaseModel):
     cdn_url: Optional[str] = Field(None, description="CDN URL where artifact will be accessible")
     s3_key: Optional[str] = Field(None, description="S3 key for the artifact")
     expires_in_seconds: int = Field(..., description="Seconds until upload URL expires")
+    required_headers: Optional[Dict[str, str]] = Field(
+        None,
+        description="Headers required when uploading to the signed URL",
+    )
 
 
 class RegisterToolArtifactRequest(BaseModel):

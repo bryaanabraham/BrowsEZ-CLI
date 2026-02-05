@@ -204,7 +204,8 @@ class ToolPublisherClient:
         self,
         upload_url: str,
         file_path: Path,
-        show_progress: bool = True
+        show_progress: bool = True,
+        required_headers: Optional[Dict[str, str]] = None,
     ) -> bool:
         """Upload file to S3 using pre-signed URL.
         
@@ -226,8 +227,10 @@ class ToolPublisherClient:
         
         with open(file_path, 'rb') as f:
             headers = {
-                'Content-Type': 'application/zip'
+                "Content-Type": "application/zip",
             }
+            if required_headers:
+                headers.update(required_headers)
             
             response = requests.put(
                 upload_url,

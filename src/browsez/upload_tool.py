@@ -90,7 +90,11 @@ def run(directory: str, api_url: Optional[str] = None, risk_level: Optional[str]
         )
         print(f"[OK] Upload URL received (expires in {upload_response.expires_in_seconds}s)")
         # Upload to S3
-        client.upload_to_s3(upload_response.upload_url, zip_path)
+        client.upload_to_s3(
+            upload_response.upload_url,
+            zip_path,
+            required_headers=upload_response.required_headers,
+        )
         
     except Exception as e:
         print(f"[X] Upload failed: {e}")

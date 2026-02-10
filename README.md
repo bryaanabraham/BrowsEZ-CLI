@@ -4,13 +4,13 @@ A command-line tool for publishing tools and UI modules to the BrowsEZ platform.
 
 ## Installation
 
-### From PyPI (when published)
+### From PyPI
 
 ```bash
 pip install browsez-cli
 ```
 
-### From Source (Development)
+### From Source (GitHub)
 
 ```bash
 # Clone and install in editable mode

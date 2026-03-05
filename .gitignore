@@ -2,11 +2,15 @@ venv/
 workflow.md
 schema.md
 transXT_tools/
+metabase_tools/
+/merchant_onboarding_tools/
 VA_Tools/
+*Actions*
 *__pycache__/
 .toolrc.json
 *.zip
 *.7z
+.env
 
 # Build artifacts
 dist/

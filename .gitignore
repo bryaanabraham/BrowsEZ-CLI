@@ -10,6 +10,7 @@ VA_Tools/
 .toolrc.json
 *.zip
 *.7z
+*ign*
 .env
 
 # Build artifacts
